@@ -1,29 +1,3 @@
 <resources>
     <string name="app_name">Tugas Recycler View</string>
-
-    <string-array name="namaTask">
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-    </string-array>
-
-    <string-array name="deskripsiTask">
-        <item>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur aut autem consectetur dolor earum, expedita fugiat in, iusto natus numquam quis quo rem similique temporibus, totam veniam? Sequi, ut?</item>
-        <item>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur cupiditate dicta dolore dolores et, expedita facilis fugit illo in, laboriosam laudantium numquam, officia possimus praesentium quo sapiente sunt voluptatum.</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-        <item>Tidur</item>
-        <item>Makan</item>
-    </string-array>
 </resources>
