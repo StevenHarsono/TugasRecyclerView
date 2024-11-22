@@ -9,28 +9,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class AddTask : AppCompatActivity() {
+class DetailTask : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_add_task)
+        setContentView(R.layout.activity_detail_task)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        var buttonAdd = findViewById<Button>(R.id.addButton)
-        buttonAdd.setOnClickListener {
-            val titleText = findViewById<EditText>(R.id.editText).text
-            val desc = findViewById<EditText>(R.id.editText2).text
+        val task = MainActivity.dataTask.get(position.toInt())
 
-            val task = Task(titleText.toString(), desc.toString())
+        var title = findViewById<EditText>(R.id.editTitle)
+        var desc = findViewById<EditText>(R.id.editDesc)
+        val button = findViewById<Button>(R.id.button4)
 
-            MainActivity.dataTask.add(task)
-            val intent = Intent(this@AddTask, MainActivity::class.java)
+        title.setText(task.nama)
+        desc.setText(task.deskripsi)
+
+        button.setOnClickListener {
+            title = findViewById(R.id.editTitle)
+            desc = findViewById(R.id.editDesc)
+
+
+            MainActivity.dataTask.set(position.toInt(),Task(title.text.toString(), desc.text.toString()))
+            val intent = Intent(this@DetailTask, MainActivity::class.java)
             startActivity(intent)
         }
 
+    }
+
+    companion object {
+        var position = "-1"
     }
 }

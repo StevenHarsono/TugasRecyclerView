@@ -15,9 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _rvTask: RecyclerView
-    private var _nama: MutableList<String> = mutableListOf()
-    private var _deskripsi: MutableList<String> = mutableListOf()
-
     private var arTask :MutableList<Task> = dataTask
     private var arTampilan: MutableList<Task> = mutableListOf()
 
@@ -35,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         _rvTask = findViewById<RecyclerView>(R.id.rvTask)
         TambahData()
         TampilkanData()
+
 
         var btnAdd = findViewById<Button>(R.id.buttonAdd)
         btnAdd.setOnClickListener {
@@ -59,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     .setPositiveButton(
                         "HAPUS",
                         DialogInterface.OnClickListener { dialog, which ->
-                            arTask.removeAt(0)
+                            arTask.removeAt(pos)
                             TambahData()
                             TampilkanData()
                         }
@@ -75,6 +73,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     )
                     .show()
+            }
+
+            override fun editData(pos: Int) {
+                DetailTask.position = pos.toString()
+                val intent = Intent(this@MainActivity, DetailTask::class.java)
+                startActivity(intent)
             }
         })
 

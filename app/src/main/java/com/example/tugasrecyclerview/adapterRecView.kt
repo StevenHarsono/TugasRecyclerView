@@ -14,6 +14,7 @@ class adapterRecView(private val listTask: MutableList<Task>):
 
     interface OnItemClickCallback {
         fun delData(pos: Int)
+        fun editData(pos: Int)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -24,6 +25,7 @@ class adapterRecView(private val listTask: MutableList<Task>):
         var _namaTask = itemView.findViewById<TextView>(R.id.task)
         var _deskripsiTask = itemView.findViewById<TextView>(R.id.description)
         var _delButton = itemView.findViewById<Button>(R.id.button)
+        var _editButton = itemView.findViewById<Button>(R.id.button2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -44,6 +46,10 @@ class adapterRecView(private val listTask: MutableList<Task>):
 
         holder._delButton.setOnClickListener {
             onItemClickCallback.delData(position)
+        }
+
+        holder._editButton.setOnClickListener {
+            onItemClickCallback.editData(position)
         }
     }
 }
