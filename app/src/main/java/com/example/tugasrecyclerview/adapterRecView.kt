@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.*
+import java.util.Date
 
 class adapterRecView(private val listTask: MutableList<Task>):
     Adapter<adapterRecView.ListViewHolder>() {
@@ -24,8 +26,10 @@ class adapterRecView(private val listTask: MutableList<Task>):
     inner class ListViewHolder(itemView: View): ViewHolder(itemView) {
         var _namaTask = itemView.findViewById<TextView>(R.id.task)
         var _deskripsiTask = itemView.findViewById<TextView>(R.id.description)
+        var _tanggalTask = itemView.findViewById<TextView>(R.id.tanggal)
         var _delButton = itemView.findViewById<Button>(R.id.button)
         var _editButton = itemView.findViewById<Button>(R.id.button2)
+        var _selesai = itemView.findViewById<CheckBox>(R.id.checkBox)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -43,6 +47,7 @@ class adapterRecView(private val listTask: MutableList<Task>):
 
         holder._namaTask.setText(task.nama)
         holder._deskripsiTask.setText(task.deskripsi)
+        holder._tanggalTask.setText(task.tanggal)
 
         holder._delButton.setOnClickListener {
             onItemClickCallback.delData(position)
@@ -50,6 +55,11 @@ class adapterRecView(private val listTask: MutableList<Task>):
 
         holder._editButton.setOnClickListener {
             onItemClickCallback.editData(position)
+        }
+
+        holder._selesai.setOnClickListener {
+            holder._selesai.isEnabled = false
+            holder._editButton.isEnabled = false
         }
     }
 }

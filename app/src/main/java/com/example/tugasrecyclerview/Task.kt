@@ -2,20 +2,26 @@ package com.example.tugasrecyclerview
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.util.Date
 
 data class Task(
     var nama: String?,
-    var deskripsi: String?
+    var deskripsi: String?,
+    var tanggal: String?,
+    var status: Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readBoolean()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nama)
         parcel.writeString(deskripsi)
+        parcel.writeString(tanggal)
     }
 
     override fun describeContents(): Int {
