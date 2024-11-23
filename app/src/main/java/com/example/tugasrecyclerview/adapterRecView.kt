@@ -60,6 +60,13 @@ class adapterRecView(private val listTask: MutableList<Task>):
         holder._selesai.setOnClickListener {
             holder._selesai.isEnabled = false
             holder._editButton.isEnabled = false
+            task.status = true
+        }
+
+        if (task.status) {
+            holder._selesai.isEnabled = false
+            holder._selesai.isChecked = true
+            holder._editButton.isEnabled = false
         }
     }
 }
