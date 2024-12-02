@@ -2,6 +2,7 @@ package com.example.tugasrecyclerview
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -12,11 +13,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
+    lateinit var sp: SharedPreferences
     private lateinit var _rvTask: RecyclerView
     private var arTask :MutableList<Task> = dataTask
     private var arTampilan: MutableList<Task> = mutableListOf()
+    private var savedTask: MutableList<Task> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +32,17 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        sp = getSharedPreferences("dataSP", MODE_PRIVATE)
 
         _rvTask = findViewById<RecyclerView>(R.id.rvTask)
+        val gson = Gson()
+        val isiSP = sp.getString("task", null)
+        val type = object : TypeToken<MutableList<Task>> () {}.type
+        if (isiSP != null) {
+            arTask.addAll(gson.fromJson(isiSP, type))
+            savedTask = gson.fromJson(isiSP, type)
+        }
+
         TambahData()
         TampilkanData()
 
@@ -53,10 +66,21 @@ class MainActivity : AppCompatActivity() {
             override fun delData(pos: Int) {
                 AlertDialog.Builder(this@MainActivity)
                     .setTitle("HAPUS DATA")
-                    .setMessage("Apakah Benar Data '"+arTask.get(pos).nama+"' akan dihapus ?")
+                    .setMessage("Apakah Benar Data '"+ arTask[pos].nama+"' akan dihapus ?")
                     .setPositiveButton(
                         "HAPUS",
                         DialogInterface.OnClickListener { dialog, which ->
+                            for (i in 0 until savedTask.size) {
+                                if (savedTask[i] == arTask[pos]) {
+                                    savedTask.removeAt(i)
+                                }
+                            }
+                            val gson = Gson()
+                            val editor = sp.edit()
+                            val json = gson.toJson(savedTask)
+                            editor.putString("task", json)
+                            editor.apply()
+
                             arTask.removeAt(pos)
                             TambahData()
                             TampilkanData()
@@ -79,6 +103,17 @@ class MainActivity : AppCompatActivity() {
                 DetailTask.position = pos.toString()
                 val intent = Intent(this@MainActivity, DetailTask::class.java)
                 startActivity(intent)
+            }
+
+            override fun saveData(pos: Int) {
+
+
+                savedTask.add(arTask.get(pos))
+                val gson = Gson()
+                val editor = sp.edit()
+                val json = gson.toJson(savedTask)
+                editor.putString("task", json)
+                editor.apply()
             }
         })
 
